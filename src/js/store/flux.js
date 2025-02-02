@@ -12,7 +12,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			urlBase: "https://www.swapi.tech/api",
+			personajes: [],
+			planetas: [],
+
+
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -37,7 +42,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+			fetchPersonajes: async() =>{
+				const store = getStore();
+
+				const response = await fetch(`${store.urlBase}/people`)
+				if(response.ok){
+					const data = await response.json()
+					setStore({personajes: data.results})
+				}
+			},
+			fetchPlanetas: async() =>{
+				const store = getStore();
+
+				const response = await fetch(`${store.urlBase}/planets`)
+				if(response.ok){
+					const data = await response.json()
+					setStore({planetas: data.results})
+				}
+			},
+			
 		}
 	};
 };
