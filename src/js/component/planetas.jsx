@@ -2,11 +2,12 @@ import React,{useContext, useEffect} from "react";
 import "../../styles/home.css";
 import { Context } from "../store/appContext.js";
 
+import Card from "../component/card.jsx";
 import CardPlanetas from "../component/cardPlanetas.jsx";
 
 const Planetas = ()=>{
     const { store, actions } = useContext(Context);
-	console.log("planetas",store.planetas)
+
     return(
         <div className="mt-5 mx-5">
 			<h1>Planets</h1>
@@ -14,7 +15,7 @@ const Planetas = ()=>{
 				{
 					store.planetas.map( (item, index) => {
 						return(
-							<CardPlanetas key={index} item={item} itemType="planetas"/> 
+							<Card key={index} item={item} itemType="planetas"/> 
 						)
 					})
 				}

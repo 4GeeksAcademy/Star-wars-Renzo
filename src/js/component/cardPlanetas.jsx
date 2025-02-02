@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 
 const CardPlanetas = (props) =>{
-    const { store, actions } = useContext(Context)
 
     const [dataPlanetas, setDataPlanetas] = useState([])
 
@@ -28,7 +27,6 @@ const CardPlanetas = (props) =>{
             const response = await fetch(`${props.item.url}`)
             const data = await response.json()
             setDataPlanetas(data.result.properties)
-            console.log("data",data)
         } catch (error) {
             console.log(error,"Error")
         }
@@ -37,7 +35,7 @@ const CardPlanetas = (props) =>{
     useEffect(()=>{
         getInfoPlanets()
     },[]);
-    console.log("planetas",dataPlanetas)
+
     return(
         <div className="col-3 mt-5 me-3">
             <div className="card">
