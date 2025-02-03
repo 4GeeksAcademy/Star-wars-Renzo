@@ -6,6 +6,9 @@ const Card = (props) =>{
 
 	const [dataInfo, setDataInfo] = useState([]);
 	const [dataPlanetas, setDataPlanetas] = useState([])
+	const [dataVehicles, setDataVehicles] = useState([])
+
+	const isSelected = store.favoritos.find( item => item.name == props.item.name)
 
 	let dato1,dato2
 	let dato3 = ""
@@ -18,6 +21,11 @@ const Card = (props) =>{
 		dato2 = `Hair-Color: ${dataInfo.hair_color}`
 		dato3 = `Eyes-Color: ${dataInfo.eyes_color}`
 	}
+	if(props.itemType == "vehiculos"){
+        urlImagen = `https://starwars-visualguide.com/assets/img/vehicles/${props.item.uid}.jpg`
+        dato1 = `Model : ${dataVehicles.model}`
+        dato2 = `Passengers: ${dataVehicles.passengers}`
+    }
 	if(props.itemType == "planetas"){
         urlImagen = `https://starwars-visualguide.com/assets/img/planets/${props.item.uid}.jpg`
         dato1 = `Population : ${dataPlanetas.population}`
@@ -36,24 +44,16 @@ const Card = (props) =>{
 			const response = await fetch(`${props.item.url}`);
 			const data = await response.json()
 			setDataInfo(data.result.properties)
+			setDataVehicles(data.result.properties)
+			setDataPlanetas(data.result.properties)
 		} catch (error) {
 			console.log(error,"Error")
 		}
 	}
-
-	const getInfoPlanets = async() =>{
-        try {
-            const response = await fetch(`${props.item.url}`)
-            const data = await response.json()
-            setDataPlanetas(data.result.properties)
-        } catch (error) {
-            console.log(error,"Error")
-        }
-    }
 	
 	useEffect(()=>{
 		getInfoPersonaje()
-		getInfoPlanets()
+
 	},[]);
 
     return(
@@ -69,7 +69,13 @@ const Card = (props) =>{
                     </div>
 					<div className="d-flex justify-content-between">
 						<button type="button" class="btn btn-outline-primary">Learn more</button>
-						<button type="button" class="btn btn-outline-danger"><i class="fa-regular fa-heart"></i></button>
+						<button type="button" class="btn btn-outline-danger"
+							onClick={()=> {
+								!isSelected ? actions.addFavoritos(props.item) : actions.removeFavoritos(props.item)
+							}}
+						>
+							<i class={isSelected ? "fa-solid fa-heart" :"fa-regular fa-heart"}></i>
+						</button>
 					</div>
 				</div>
 			</div>

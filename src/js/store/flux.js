@@ -16,6 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			urlBase: "https://www.swapi.tech/api",
 			personajes: [],
 			planetas: [],
+			vehiculos: [],
+			favoritos: [],
 
 
 		},
@@ -52,6 +54,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({personajes: data.results})
 				}
 			},
+			fetchVehiculos: async() =>{
+				const store = getStore();
+
+				const response = await fetch(`${store.urlBase}/vehicles`)
+				if(response.ok){
+					const data = await response.json()
+					setStore({vehiculos: data.results})
+				}
+			},
 			fetchPlanetas: async() =>{
 				const store = getStore();
 
@@ -60,6 +71,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json()
 					setStore({planetas: data.results})
 				}
+			},
+			addFavoritos: async(character) =>{
+				const store = getStore()
+
+				const liked = store.favoritos.find(item => character.name == item.name)
+				if(!liked){
+					setStore({favoritos: [...store.favoritos, character]})
+				}
+			},
+			removeFavoritos: async(character) =>{
+				const store = getStore()
+
+				const remover = store.favoritos.filter( item => item.name !== character.name)
+				setStore({favoritos: remover})
+				
 			},
 			
 		}
