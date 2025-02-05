@@ -8,12 +8,15 @@ import CardPlanetas from "../component/cardPlanetas.jsx";
 const Planetas = ()=>{
     const { store, actions } = useContext(Context);
 
+	const dataStoragePlanetas = JSON.parse(localStorage.getItem("ls-Planetas"))
+	//console.log("ls-planetas",dataStoragePlanetas)
+
     return(
         <div className="mt-5 mx-5">
 			<h1>Planets</h1>
 			<div className="d-flex position-relative overflow-auto">
 				{
-					store.planetas.map( (item, index) => {
+					dataStoragePlanetas.map( (item, index) => {
 						return(
 							<Card key={index} item={item} itemType="planetas"/> 
 						)

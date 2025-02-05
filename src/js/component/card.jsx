@@ -1,12 +1,13 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 const Card = (props) =>{
 	const { store, actions } = useContext(Context)
 
 	const [dataInfo, setDataInfo] = useState([]);
-	const [dataPlanetas, setDataPlanetas] = useState([])
-	const [dataVehicles, setDataVehicles] = useState([])
+	const dataStorageInfo = JSON.parse(localStorage.getItem("ls-dataInfo"))
+	//console.log(dataStorageInfo)
 
 	const isSelected = store.favoritos.find( item => item.name == props.item.name)
 
@@ -17,19 +18,19 @@ const Card = (props) =>{
 
 	if(props.itemType == "personajes"){
 		urlImagen = `https://starwars-visualguide.com/assets/img/characters/${props.item.uid}.jpg`
-		dato1 = `Gender: ${dataInfo.gender}`
-		dato2 = `Hair-Color: ${dataInfo.hair_color}`
-		dato3 = `Eyes-Color: ${dataInfo.eyes_color}`
+		dato1 = `Gender: ${dataStorageInfo.gender}`
+		dato2 = `Hair-Color: ${dataStorageInfo.hair_color}`
+		dato3 = `Eyes-Color: ${dataStorageInfo.eyes_color}`
 	}
 	if(props.itemType == "vehiculos"){
         urlImagen = `https://starwars-visualguide.com/assets/img/vehicles/${props.item.uid}.jpg`
-        dato1 = `Model : ${dataVehicles.model}`
-        dato2 = `Passengers: ${dataVehicles.passengers}`
+        dato1 = `Model : ${dataInfo.model}`
+        dato2 = `Passengers: ${dataInfo.passengers}`
     }
 	if(props.itemType == "planetas"){
         urlImagen = `https://starwars-visualguide.com/assets/img/planets/${props.item.uid}.jpg`
-        dato1 = `Population : ${dataPlanetas.population}`
-        dato2 = `Terrain: ${dataPlanetas.terrain}`
+        dato1 = `Population : ${dataInfo.population}`
+        dato2 = `Terrain: ${dataInfo.terrain}`
     }
 	
 	const handleImageError = (e) => {
@@ -44,8 +45,7 @@ const Card = (props) =>{
 			const response = await fetch(`${props.item.url}`);
 			const data = await response.json()
 			setDataInfo(data.result.properties)
-			setDataVehicles(data.result.properties)
-			setDataPlanetas(data.result.properties)
+			localStorage.setItem("ls-dataInfo", JSON.stringify(data.result.properties))
 		} catch (error) {
 			console.log(error,"Error")
 		}
@@ -68,7 +68,9 @@ const Card = (props) =>{
                         <dd>{dato3}</dd>
                     </div>
 					<div className="d-flex justify-content-between">
+						<Link to={"/detalle-personaje/"+ props.item.uid}>
 						<button type="button" class="btn btn-outline-primary">Learn more</button>
+						</Link>
 						<button type="button" class="btn btn-outline-danger"
 							onClick={()=> {
 								!isSelected ? actions.addFavoritos(props.item) : actions.removeFavoritos(props.item)

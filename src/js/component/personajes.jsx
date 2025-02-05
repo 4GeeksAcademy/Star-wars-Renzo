@@ -7,12 +7,15 @@ import Card from "../component/card.jsx";
 export const Personajes = () => {
 	const { store, actions } = useContext(Context);
 
+	const dataStoragePersonajes = JSON.parse(localStorage.getItem("ls-Personajes"))
+	//console.log("local storage", dataStoragePersonajes)
+
 	return <>
 		<div className="mt-5 mx-5">
 			<h1>Characters</h1>
 			<div className="d-flex position-relative overflow-auto">
 				{
-					store.personajes.map( (item, index) => {
+					dataStoragePersonajes.map( (item, index) => {
 						return(
 							<Card key={index} item={item} itemType="personajes"/> 
 						)
