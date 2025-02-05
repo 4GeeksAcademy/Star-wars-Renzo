@@ -17,7 +17,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			personajes: [],
 			detallePersonajes: [],
 			planetas: [],
+			detallePlanetas: [],
 			vehiculos: [],
+			detalleVehiculos: [],
 			favoritos: [],
 
 
@@ -77,6 +79,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					localStorage.setItem("ls-Vehiculos",JSON.stringify(data.results))
 				}
 			},
+
+			fetchVehiculosDetalle: async(uid) =>{
+				const store = getStore();
+
+				const response = await fetch(`${store.urlBase}/vehicles/${uid}`)
+				if(response.ok){
+					const data = await response.json()
+					setStore({detalleVehiculos: [data.result]})
+				}
+			},
+
 			fetchPlanetas: async() =>{
 				const store = getStore();
 
@@ -87,6 +100,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					localStorage.setItem("ls-Planetas",JSON.stringify(data.results))
 				}
 			},
+
+			fetchPlanetasDetalle: async(uid) =>{
+				const store = getStore();
+
+				const response = await fetch(`${store.urlBase}/planets/${uid}`)
+				if(response.ok){
+					const data = await response.json()
+					setStore({detallePlanetas: [data.result]})
+				}
+			},
+
 			addFavoritos: async(character) =>{
 				const store = getStore()
 

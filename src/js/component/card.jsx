@@ -6,7 +6,8 @@ const Card = (props) =>{
 	const { store, actions } = useContext(Context)
 
 	const [dataInfo, setDataInfo] = useState([]);
-	const dataStorageInfo = JSON.parse(localStorage.getItem("ls-dataInfo"))
+
+	//const dataStorageInfo = JSON.parse(localStorage.getItem("ls-dataInfo"))
 	//console.log(dataStorageInfo)
 
 	const isSelected = store.favoritos.find( item => item.name == props.item.name)
@@ -18,9 +19,9 @@ const Card = (props) =>{
 
 	if(props.itemType == "personajes"){
 		urlImagen = `https://starwars-visualguide.com/assets/img/characters/${props.item.uid}.jpg`
-		dato1 = `Gender: ${dataStorageInfo.gender}`
-		dato2 = `Hair-Color: ${dataStorageInfo.hair_color}`
-		dato3 = `Eyes-Color: ${dataStorageInfo.eyes_color}`
+		dato1 = `Gender: ${dataInfo.gender}`
+		dato2 = `Hair-Color: ${dataInfo.hair_color}`
+		dato3 = `Eyes-Color: ${dataInfo.eyes_color}`
 	}
 	if(props.itemType == "vehiculos"){
         urlImagen = `https://starwars-visualguide.com/assets/img/vehicles/${props.item.uid}.jpg`
@@ -36,8 +37,7 @@ const Card = (props) =>{
 	const handleImageError = (e) => {
 		// Se evita que se llame nuevamente el evento en caso de que la imagen de placeholder también falle
 		e.target.onerror = null;
-		e.target.src =
-		  "https://starwars-visualguide.com/assets/img/placeholder.jpg";
+		e.target.src = "https://starwars-visualguide.com/assets/img/placeholder.jpg";
 	};
 
 	const getInfoPersonaje = async() =>{
@@ -45,7 +45,7 @@ const Card = (props) =>{
 			const response = await fetch(`${props.item.url}`);
 			const data = await response.json()
 			setDataInfo(data.result.properties)
-			localStorage.setItem("ls-dataInfo", JSON.stringify(data.result.properties))
+			//localStorage.setItem("ls-dataInfo", JSON.stringify(data.result.properties))
 		} catch (error) {
 			console.log(error,"Error")
 		}
@@ -53,7 +53,7 @@ const Card = (props) =>{
 	
 	useEffect(()=>{
 		getInfoPersonaje()
-
+		//actions.fetchPersonajesDetalle(id)
 	},[]);
 
     return(
@@ -68,9 +68,22 @@ const Card = (props) =>{
                         <dd>{dato3}</dd>
                     </div>
 					<div className="d-flex justify-content-between">
-						<Link to={"/detalle-personaje/"+ props.item.uid}>
-						<button type="button" class="btn btn-outline-primary">Learn more</button>
-						</Link>
+						{
+							props.itemType == "personajes" && <Link to={"/detalle-personaje/"+ props.item.uid}>
+							<button type="button" class="btn btn-outline-primary">Learn more</button>
+							</Link>
+						}
+						{
+							props.itemType == "vehiculos" && <Link to={"/detalle-vehiculo/"+ props.item.uid}>
+							<button type="button" class="btn btn-outline-primary">Learn more</button>
+							</Link>
+						}
+						{
+							props.itemType == "planetas" && <Link to={"/detalle-planeta/"+ props.item.uid}>
+							<button type="button" class="btn btn-outline-primary">Learn more</button>
+							</Link>
+						}
+						
 						<button type="button" class="btn btn-outline-danger"
 							onClick={()=> {
 								!isSelected ? actions.addFavoritos(props.item) : actions.removeFavoritos(props.item)
