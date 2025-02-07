@@ -8,7 +8,7 @@ const FavoriteDropdown = () => {
 
 	return (<div className="dropdown">
 		<button className="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-		  Favorites ❤️
+		  Favorites {store.favoritos.length}
 		</button>
 
 		<ul className="dropdown-menu">
@@ -30,9 +30,9 @@ const FavoriteDropdown = () => {
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-light bg-light mb-3 mx-5">
+		<nav className="navbar navbar-light bg-light my-3 mx-5 bg-black">
 			<Link to="/">
-				<img src="https://1000logos.net/wp-content/uploads/2017/06/Star-Wars-Logo-1.png" className="" style={{width:"150px"}} />
+				<img src="https://brandslogos.com/wp-content/uploads/images/large/star-wars-logo-black-and-white-outline-1.png" className="" style={{width:"150px"}} />
 			</Link>
 			<div className="ml-auto">
 				<FavoriteDropdown/>

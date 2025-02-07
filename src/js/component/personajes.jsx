@@ -8,11 +8,10 @@ export const Personajes = () => {
 	const { store, actions } = useContext(Context);
 
 	const dataStoragePersonajes = JSON.parse(localStorage.getItem("ls-Personajes"))
-	//console.log("local storage", dataStoragePersonajes)
 
 	return <>
 		<div className="mt-5 mx-5">
-			<h1>Characters</h1>
+			<h1 className="text-warning">Characters</h1>
 			<div className="d-flex position-relative overflow-auto">
 				{
 					dataStoragePersonajes.map( (item, index) => {

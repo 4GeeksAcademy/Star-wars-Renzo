@@ -7,9 +7,6 @@ const PlanetasDetalles = () =>{
     const {id} = useParams()
     const {store, actions} = useContext(Context)
     const [dataDetalles, setDataDetalles] = useState([]);
-
-    console.log("id", id)
-    console.log("detalles store", store.detallePersonajes)
     
     const CardDetalle = (props) =>{
 
@@ -19,7 +16,7 @@ const PlanetasDetalles = () =>{
             <div className="pt-5 bg-black bg-gradient">
                 <div className="card mb-3 mx-5" style={{border: "0"}}>
                     <div className="row g-0">
-                        <div className="col-md-4">
+                        <div className="col-md-4 bg-dark bg-gradient">
                             <img src={urlImagen} className="img-detalle img-fluid rounded-start" alt="..."/>
                         </div>
                         <div className="col-md-8 bg-dark bg-gradient">
