@@ -15,7 +15,7 @@ const Planetas = ()=>{
 			<h1 className="text-warning">Planets</h1>
 			<div className="d-flex position-relative overflow-auto">
 				{
-					dataStoragePlanetas.map( (item, index) => {
+					dataStoragePlanetas && dataStoragePlanetas.map( (item, index) => {
 						return(
 							<Card key={index} item={item} itemType="planetas"/> 
 						)

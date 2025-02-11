@@ -14,7 +14,7 @@ export const Personajes = () => {
 			<h1 className="text-warning">Characters</h1>
 			<div className="d-flex position-relative overflow-auto">
 				{
-					dataStoragePersonajes.map( (item, index) => {
+					dataStoragePersonajes && dataStoragePersonajes.map( (item, index) => {
 						return(
 							<Card key={index} item={item} itemType="personajes"/> 
 						)

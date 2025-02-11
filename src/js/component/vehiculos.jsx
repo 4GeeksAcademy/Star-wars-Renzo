@@ -14,7 +14,7 @@ const Vehiculos = () => {
 			<h1 className="text-warning">Vehicles</h1>
 			<div className="d-flex position-relative overflow-auto">
 				{
-					dataStorageVehiculos.map( (item, index) => {
+					dataStorageVehiculos && dataStorageVehiculos.map( (item, index) => {
 						return(
 							<Card key={index} item={item} itemType="vehiculos"/> 
 						)
