@@ -37,7 +37,7 @@ const Card = (props) =>{
 	const handleImageError = (e) => {
 		// Se evita que se llame nuevamente el evento en caso de que la imagen de placeholder también falle
 		e.target.onerror = null;
-		e.target.src = "https://starwars-visualguide.com/assets/img/placeholder.jpg";
+		e.target.src = "https://pbs.twimg.com/profile_images/1634821290488938496/VGC6ZuoY_400x400.jpg";
 	};
 
 	const getInfoPersonaje = async() =>{
@@ -59,7 +59,7 @@ const Card = (props) =>{
     return(
         <div className="col-3 mt-5 me-3">
 			<div className="card">
-				<img src={urlImagen} className="card-img-top" alt="..." onError={handleImageError}/>
+				<img src={urlImagen} className="card-img-top" alt="..." onError={handleImageError} />
 				<div className="card-body p-4">
 					<h5 className="card-title mb-3">{props.item.name}</h5>
                     <div className="text-wrap mb-3">
